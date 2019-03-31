@@ -1,3 +1,5 @@
+@file:JvmName("PlayerData")
+
 package br.arcus
 
 import java.util.*
@@ -7,7 +9,7 @@ val NULL_EQUIP = 8
 fun toArr(bit: Int): Array<Boolean> {
     var bit = bit
     val arr = Array<Boolean>(8) { false }
-    for(i in 7 downTo 0){
+    for (i in 7 downTo 0) {
         val t = bit and 0b1
         arr[i] = t != 0
         bit = bit shr 1
@@ -24,7 +26,6 @@ fun toBit(arr: Array<Boolean>): Int {
     return r
 }
 
-
 class PlayerData(val name: String) {
 
     val equipAbility: Array<Int> = arrayOf(NULL_EQUIP, NULL_EQUIP, NULL_EQUIP)
@@ -37,6 +38,20 @@ class PlayerData(val name: String) {
         unlockAbility[AbilityType.Attack] = Array(8) { false }
         unlockAbility[AbilityType.Defensive] = Array(8) { false }
         unlockAbility[AbilityType.Proficient] = Array(8) { false }
+    }
+
+    fun equip(abi: Ability) {
+        equipAbility[abi.type.index] = abi.level
+    }
+
+    fun isUnlock(abi: Ability): Boolean {
+        val uc = unlockAbility[abi.type]!!
+        return uc[abi.level]
+    }
+
+    fun unlock(abi: Ability) {
+        val uc = unlockAbility[abi.type]!!
+        uc[abi.level] = true
     }
 
     fun bitUnlockAbility(): Int {
@@ -52,7 +67,7 @@ class PlayerData(val name: String) {
         return res
     }
 
-    fun loadUnlockAbility(res:Int){
+    fun loadUnlockAbility(res: Int) {
         val pro = res and 0b11111111
         unlockAbility[AbilityType.Proficient] = toArr(pro)
         val def = (res shr 8) and 0b11111111
