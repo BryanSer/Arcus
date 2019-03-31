@@ -1,5 +1,3 @@
-@file:JvmName("PlayerData")
-
 package br.arcus
 
 import java.util.*

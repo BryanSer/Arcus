@@ -12,8 +12,15 @@ public class AbilityUI extends BaseUI {
 
     {
         int index = 0;
-        for (AbilityType abilityType : AbilityType.values()) {
-            contains[index] = Item.getNewInstance(abilityType.getDisplayItem());
+        for (AbilityType at : AbilityType.values()) {
+            contains[index] = Item.getNewInstance(at.getDisplayItem());
+            int it = index + 1;
+            for (int lv = 0; lv < 9; lv++) {
+                Ability a = at.getAbility(lv);
+                if (a != null) {
+                    contains[it + lv] = a.getDisplayItem();
+                }
+            }
             index += 9;
         }
     }

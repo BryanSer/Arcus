@@ -4,6 +4,7 @@ import Br.API.GUI.Ex.Item
 import Br.API.ItemBuilder
 import org.bukkit.Bukkit
 import org.bukkit.Material
+import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Entity
 import org.bukkit.entity.Player
@@ -11,6 +12,7 @@ import org.bukkit.entity.Projectile
 import org.bukkit.event.Listener
 import org.bukkit.event.inventory.ClickType
 import org.bukkit.inventory.ItemStack
+import java.io.File
 
 
 val lockAbilityDisplay = ItemBuilder.getBuilder(Material.BARRIER).name("§c未解锁能力").build()
@@ -21,10 +23,13 @@ abstract class Ability(
         val description: List<String>,
         val type: AbilityType,
         val level: Int, // 从0开始 最大7
-        val default: Boolean = false
+        protected val displayItemBuilder: ItemBuilder
 ) {
 
-    lateinit var displayItemStack: ItemStack
+    val config: MutableMap<String, Any> = mutableMapOf()
+
+
+    private lateinit var displayItemStack: ItemStack
 
     fun getDisplayItem(): Item = Item.getNewInstance { p: Player ->
         if (this.isUnlock(p)) {
@@ -42,9 +47,31 @@ abstract class Ability(
     }
 
     fun init() {
+        val file = File(Main.Plugin.dataFolder, "config/$name.yml")
+        if (file.exists()) {
+            val data = YamlConfiguration.loadConfiguration(file)
+            for (key in data.getKeys(false)) {
+                config[key] = data[key]
+            }
+        } else {
+            val data = YamlConfiguration()
+            for ((k, v) in config) {
+                data[k] = v
+            }
+            data.save(file)
+        }
         if (this is Listener) {
             Bukkit.getPluginManager().registerEvents(this, Main.Plugin)
         }
+        displayItemStack = displayItemBuilder.name(this.displayName).lore(
+                description.map {
+                    var str = it
+                    for ((k, v) in config) {
+                        str = str.replace("{$k}", v.toString())
+                    }
+                    str
+                }.toList()
+        ).build()
     }
 
 
