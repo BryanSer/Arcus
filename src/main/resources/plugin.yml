@@ -1,0 +1,3 @@
+name: Arcus
+version: ${project.version}
+main: br.arcus.Main

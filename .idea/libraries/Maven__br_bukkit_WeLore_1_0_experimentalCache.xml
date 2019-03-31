@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: br.bukkit:WeLore:1.0-experimentalCache">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/Br/bukkit/WeLore/1.0-experimentalCache/WeLore-1.0-experimentalCache.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/br/bukkit/WeLore/1.0-experimentalCache/WeLore-1.0-experimentalCache-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/br/bukkit/WeLore/1.0-experimentalCache/WeLore-1.0-experimentalCache-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
