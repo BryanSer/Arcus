@@ -135,11 +135,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>br.bukkit</groupId>
-            <artifactId>WeLore</artifactId>
-            <version>1.0-experimentalCache</version>
-        </dependency>
-        <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib</artifactId>
             <version>${kotlin.version}</version>
