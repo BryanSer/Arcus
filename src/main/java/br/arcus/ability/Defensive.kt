@@ -5,11 +5,11 @@ import br.arcus.Ability
 import br.arcus.AbilityType
 import org.bukkit.Material
 
-object ArtificialScroll : Ability(
-        "ArtificialScroll",
-        "§a上古卷轴",
+object Clean : Ability(
+        "Clean",
+        "§a净化之术",
         listOf(
-                "§7在{range}格内离自己最近的玩家吸到身边并移除对方 §e增益 §7药水效果",
+                "§7震开周围§e {range} §7格内的玩家并移除自身 §e负面 §7药水效果",
                 "§7冷却时间§e {cooldown} §7秒",
                 "§7按住 §eF §7移除增益状态"
         ),
@@ -19,17 +19,16 @@ object ArtificialScroll : Ability(
 ) {
 }
 
-object ToFightAnUphillBattle : Ability(
-        "ToFightAnUphillBattle",
-        "§a背水一战",
+object SoundOfGoldenLeather : Ability(
+        "SoundOfGoldenLeather",
+        "§a金革之声",
         listOf(
-                "§7当血量低于一半获得 §e{time}秒 §7双倍弹跳和移速",
+                "§7当血量低于一半时让对方的攻击力减半§e {time} §7秒",
                 "§7冷却时间§e {cooldown} §7秒",
-                "§7按住 §eF §7移除增益状态"
+                "§7按住 §eQ §7触发金革之声"
         ),
         AbilityType.Attack,
         1,
         ItemBuilder.getBuilder(Material.PAPER)
 ) {
 }
-
