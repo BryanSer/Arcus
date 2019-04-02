@@ -27,8 +27,7 @@ abstract class Ability(
 ) {
 
     val config: MutableMap<String, Any> = mutableMapOf()
-
-
+    val cooldownManager = CDManager.newInstance()
     private lateinit var displayItemStack: ItemStack
 
     fun getDisplayItem(): Item = Item.getNewInstance { p: Player ->
@@ -42,12 +41,15 @@ abstract class Ability(
         lockAbilityDisplay
     }.setClick(ClickType.LEFT) { p ->
         if (this.isUnlock(p)) {
-
+            val pd = Data.getData(p)
+            pd.equip(this)
+        } else {
+            p.sendMessage("§c你还没有解锁这个能力")
         }
     }
 
     fun init() {
-        val file = File(Main.Plugin.dataFolder, "config/$name.yml")
+        val file = File(Main.Plugin.dataFolder, "config/ability/$name.yml")
         if (file.exists()) {
             val data = YamlConfiguration.loadConfiguration(file)
             for (key in data.getKeys(false)) {
@@ -74,6 +76,12 @@ abstract class Ability(
         ).build()
     }
 
+    abstract fun onCast(e: Player): Boolean//返回true表示释放成功
+
+    open fun getCooldown(): Double {
+        val cd = this.config["cooldown"] as? Number ?: 10.0
+        return cd.toDouble()
+    }
 
     fun isActiving(e: Entity): Boolean {
         val pd = Data.getData(e)
