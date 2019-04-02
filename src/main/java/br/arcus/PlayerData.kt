@@ -26,11 +26,16 @@ fun toBit(arr: Array<Boolean>): Int {
 
 class PlayerData(val name: String) {
 
-    val equipAbility: Array<Int> = arrayOf(NULL_EQUIP, NULL_EQUIP, NULL_EQUIP)
+    private val equipAbility: Array<Int> = arrayOf(NULL_EQUIP, NULL_EQUIP, NULL_EQUIP)
     private val unlockAbility: MutableMap<AbilityType, Array<Boolean>> = EnumMap(AbilityType::class.java)
-    val equipPotential: MutableSet<Int> = mutableSetOf()
-    val unlockPotential: MutableSet<Int> = mutableSetOf()
+    private val equipPotential: MutableSet<Int> = mutableSetOf()
+    private val unlockPotential: MutableSet<Int> = mutableSetOf()
 
+
+    fun getActiving(type: AbilityType): Ability? {
+        val i = equipAbility[type.index]
+        return if (i == NULL_EQUIP) null else type.getAbility(i)
+    }
 
     init {
         unlockAbility[AbilityType.Attack] = Array(8) { false }

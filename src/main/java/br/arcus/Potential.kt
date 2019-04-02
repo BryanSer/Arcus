@@ -18,7 +18,36 @@ abstract class Potential(
     val config: MutableMap<String, Any> = mutableMapOf()
     private lateinit var displayItemStack: ItemStack
 
+    fun reload() {
+        val file = File(Main.Plugin.dataFolder, "config/potential/$name.yml")
+        if (file.exists()) {
+            val data = YamlConfiguration.loadConfiguration(file)
+            for (key in data.getKeys(false)) {
+                config[key] = data[key]
+            }
+        } else {
+            val data = YamlConfiguration()
+            for ((k, v) in config) {
+                data[k] = v
+            }
+            data.save(file)
+        }
+        if (this is Listener) {
+            Bukkit.getPluginManager().registerEvents(this, Main.Plugin)
+        }
+        displayItemStack = displayItemBuilder.name(this.displayName).lore(
+                description.map {
+                    var str = it
+                    for ((k, v) in config) {
+                        str = str.replace("{$k}", v.toString())
+                    }
+                    str
+                }.toList()
+        ).build()
+    }
+
     fun init() {
+        Data.registeredPotential[name] = this
         val file = File(Main.Plugin.dataFolder, "config/potential/$name.yml")
         if (file.exists()) {
             val data = YamlConfiguration.loadConfiguration(file)

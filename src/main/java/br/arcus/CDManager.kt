@@ -6,6 +6,8 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDeathEvent
 import org.bukkit.event.entity.PlayerDeathEvent
+import java.text.SimpleDateFormat
+import java.util.*
 
 class CDManager {
 
@@ -22,10 +24,23 @@ class CDManager {
         return (System.currentTimeMillis() - last) > cd * 1000L
     }
 
+    fun getLeftTime(e:Entity,cd:Double):String{
+        var last = lastCast[getID(e)] ?: 0
+        last = System.currentTimeMillis() - last
+        last = (cd * 1000L - last).toLong()
+        if(last <0){
+            return "0.0"
+        }else {
+            return dateFormat.format(Date(last))
+        }
+    }
+
     fun inTime(e: Entity, time: Double): Boolean = !castable(e, time)
 
     companion object : Listener {
         private val runningCDManager = mutableListOf<CDManager>()
+        @JvmField
+        val dateFormat = SimpleDateFormat("mm:ss")
 
         @EventHandler
         fun onDeath(evt: EntityDeathEvent) {
@@ -47,7 +62,7 @@ class CDManager {
         }
 
         @JvmStatic
-        fun newInstance():CDManager{
+        fun newInstance(): CDManager {
             val cd = CDManager()
             runningCDManager.add(cd)
             return cd

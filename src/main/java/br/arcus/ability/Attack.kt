@@ -5,6 +5,13 @@ import br.arcus.Ability
 import br.arcus.AbilityType
 import org.bukkit.Material
 
+fun getAttack():List<Ability>{
+        return listOf(
+                ArtificialScroll,
+                ToFightAnUphillBattle
+        )
+}
+
 object ArtificialScroll : Ability(
         "ArtificialScroll",
         "§a上古卷轴",
