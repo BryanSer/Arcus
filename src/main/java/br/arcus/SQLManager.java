@@ -31,7 +31,7 @@ public class SQLManager {
                 "UnlockPotential LONG NOT NULL," +
                 "UnlockAbility INT NOT NULL" +
                 ");");
-        insert = connection.prepareStatement("INSERT INTO MinecraftInfo (Name,EquipAbility,EquipPotential,UnlockPotential,UnlockAbility) VALUES (?, ?, ?, ?, ?)");
+        insert = connection.prepareStatement("INSERT INTO ArcusPlayerData (Name,EquipAbility,EquipPotential,UnlockPotential,UnlockAbility) VALUES (?, ?, ?, ?, ?)");
         selectData = connection.prepareStatement("SELECT * FROM ArcusPlayerData WHERE Name = ? LIMIT 1");
         update = connection.prepareStatement("UPDATE ArcusPlayerData SET EquipAbility = ?, EquipPotential = ?, UnlockPotential = ?, UnlockAbility = ? WHERE PlayerName = ? LIMIT 1");
     }
