@@ -4,62 +4,62 @@ import Br.API.ItemBuilder
 import br.arcus.Potential
 import org.bukkit.Material
 
-object HealthGem : Potential(
+object HealthGem : GemPotential(
         "HealthGem",
         "§aHealthGem",
         listOf(
                 "§7增加HealthGem宝石额外百分比冻结时间",
                 "§7增加量: {amount}%"
         ),
-        0,
+        9,
         ItemBuilder.getBuilder(Material.PAPER)
 ) {
 }
 
-object ShieldGem : Potential(
+object ShieldGem : GemPotential(
         "ShieldGem",
         "§aShieldGem",
         listOf(
                 "§7增加ShieldGem宝石额外百分比护盾量和护盾持续时间",
                 "§7增加量: {amount}%"
         ),
-        1,
+        10,
         ItemBuilder.getBuilder(Material.PAPER)
 ) {
 }
 
-object SidestepGem : Potential(
+object SidestepGem : GemPotential(
         "SidestepGem",
         "§aSidestepGem",
         listOf(
                 "§7增加SidestepGem宝石额外闪避概率",
                 "§7增加量: {amount}%"
         ),
-        2,
+        11,
         ItemBuilder.getBuilder(Material.PAPER)
 ) {
 }
 
-object HeavyGem : Potential(
+object HeavyGem : GemPotential(
         "HeavyGem",
         "§aHeavyGem",
         listOf(
                 "§7增加HeavyGem宝石额外击退概率",
                 "§7增加量: {amount}%"
         ),
-        3,
+        12,
         ItemBuilder.getBuilder(Material.PAPER)
 ) {
 }
 
-object ArmorGem : Potential(
+object ArmorGem : GemPotential(
         "ArmorGem",
         "§aArmorGem",
         listOf(
                 "§7增加ArmorGem宝石额外承受伤害",
                 "§7增加量: {amount}%"
         ),
-        4,
+        13,
         ItemBuilder.getBuilder(Material.PAPER)
 ) {
 }

@@ -24,7 +24,8 @@ abstract class Ability(
         val description: List<String>,
         val type: AbilityType,
         val level: Int, // 从0开始 最大7
-        protected val displayItemBuilder: ItemBuilder
+        protected val displayItemBuilder: ItemBuilder,
+        val buttonActive: Boolean = false
 ) {
 
     val config: MutableMap<String, Any> = mutableMapOf()
@@ -71,6 +72,10 @@ abstract class Ability(
                 description.map {
                     var str = it
                     for ((k, v) in config) {
+                        var v = v
+                        if (v is Double) {
+                            v = String.format("%.2f", v)
+                        }
                         str = str.replace("{$k}", v.toString())
                     }
                     str
@@ -78,7 +83,7 @@ abstract class Ability(
         ).build()
     }
 
-    abstract fun onCast(e: Player): Boolean//返回true表示释放成功
+    abstract fun onCast(p: Player): Boolean//返回true表示释放成功
 
     private var cooldown: Double? = null
 
@@ -134,6 +139,7 @@ abstract class Ability(
             list.addAll(getDefensive())
             list.addAll(getProficient())
             for (ab in list) {
+                ab.init()
                 Data.registeredAbility[ab.name] = ab
             }
         }

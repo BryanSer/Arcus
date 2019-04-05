@@ -25,10 +25,14 @@ enum class AbilityType(
         fun onF(evt: PlayerSwapHandItemsEvent) {
             val pd = Data.getData(evt.player) ?: return
             val ac = pd.getActiving(this) ?: return
+            if(!ac.buttonActive){
+                return
+            }
             evt.isCancelled = true
             if (ac.cooldownManager.castable(evt.player, ac.getCooldown())) {
                 if (ac.onCast(evt.player)) {
                     ac.cooldownManager.cast(evt.player)
+                    evt.player.sendMessage("§6§l你发动了${ac.displayName}")
                 }
             } else {
                 evt.player.sendMessage(
@@ -43,10 +47,14 @@ enum class AbilityType(
         fun onQ(evt: PlayerDropItemEvent) {
             val pd = Data.getData(evt.player) ?: return
             val ac = pd.getActiving(this) ?: return
+            if(!ac.buttonActive){
+                return
+            }
             evt.isCancelled = true
             if (ac.cooldownManager.castable(evt.player, ac.getCooldown())) {
                 if (ac.onCast(evt.player)) {
                     ac.cooldownManager.cast(evt.player)
+                    evt.player.sendMessage("§6§l你发动了${ac.displayName}")
                 }
             }else {
                 evt.player.sendMessage(
@@ -62,10 +70,14 @@ enum class AbilityType(
             if(!evt.isSneaking) return
             val pd = Data.getData(evt.player) ?: return
             val ac = pd.getActiving(this) ?: return
+            if(!ac.buttonActive){
+                return
+            }
             evt.isCancelled = true
             if (ac.cooldownManager.castable(evt.player, ac.getCooldown())) {
                 if (ac.onCast(evt.player)) {
                     ac.cooldownManager.cast(evt.player)
+                    evt.player.sendMessage("§6§l你发动了${ac.displayName}")
                 }
             }else {
                 evt.player.sendMessage(

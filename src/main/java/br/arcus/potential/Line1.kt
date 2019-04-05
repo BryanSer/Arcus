@@ -3,20 +3,77 @@ package br.arcus.potential
 import Br.API.ItemBuilder
 import br.arcus.Potential
 import org.bukkit.Material
+import org.bukkit.entity.Player
+import org.bukkit.event.EventHandler
+import org.bukkit.event.Listener
+import org.bukkit.event.entity.EntityDamageByEntityEvent
 
-object AttackGem : Potential(
+fun getPotential(): List<GemPotential> = listOf(
+        AttackGem,
+        BackstabGem,
+        ChainLigGem,
+        CritGem,
+        CurseArrowGem,
+        DiffusionGem,
+        LightningGem,
+        VampireGem,
+        //HealthGem,
+        ShieldGem,
+        SidestepGem,
+        HeavyGem,
+        ArmorGem
+)
+
+abstract class GemPotential(
+        name: String,
+        displayName: String,
+        description: List<String>,
+        index: Int,
+        displayItemBuilder: ItemBuilder
+) : Potential(
+        name,
+        displayName,
+        description,
+        index,
+        displayItemBuilder
+) {
+    init {
+        config["amount"] = 10.0
+    }
+
+    var amount: Double? = null
+    fun getAmount(): Double {
+        if (amount == null) {
+            amount = (config["amount"] as Number).toDouble() / 100.0
+        }
+        return amount!!
+    }
+
+    override fun reload() {
+        super.reload()
+        amount = null
+    }
+}
+
+object AttackGem : GemPotential(
         "AttackGem",
         "§aAttackGem",
         listOf(
-                "§7增加AttackGem宝石额外百分比伤害",
+                "§7攻击时造成额外上海",
                 "§7增加量: {amount}%"
         ),
         0,
         ItemBuilder.getBuilder(Material.PAPER)
-) {
+) , Listener {
+    @EventHandler
+    fun onDamage(evt:EntityDamageByEntityEvent){
+        if(super.isActiving(evt.damager as? Player ?: return)){
+            evt.damage *= (1.0 + this.getAmount())
+        }
+    }
 }
 
-object BackstabGem : Potential(
+object BackstabGem : GemPotential(
         "BackstabGem",
         "§aBackstabGem",
         listOf(
@@ -28,7 +85,7 @@ object BackstabGem : Potential(
 ) {
 }
 
-object ChainLigGem : Potential(
+object ChainLigGem : GemPotential(
         "ChainLigGem",
         "§aChainLigGem",
         listOf(
@@ -40,7 +97,7 @@ object ChainLigGem : Potential(
 ) {
 }
 
-object CritGem : Potential(
+object CritGem : GemPotential(
         "CritGem",
         "§aCritGem",
         listOf(
@@ -52,7 +109,7 @@ object CritGem : Potential(
 ) {
 }
 
-object CurseArrowGem : Potential(
+object CurseArrowGem : GemPotential(
         "CurseArrowGem",
         "§aCurseArrowGem",
         listOf(
@@ -64,7 +121,7 @@ object CurseArrowGem : Potential(
 ) {
 }
 
-object DiffusionGem : Potential(
+object DiffusionGem : GemPotential(
         "DiffusionGem",
         "§aDiffusionGem",
         listOf(
@@ -76,7 +133,7 @@ object DiffusionGem : Potential(
 ) {
 }
 
-object LightningGem : Potential(
+object LightningGem : GemPotential(
         "LightningGem",
         "§aLightningGem",
         listOf(
@@ -88,7 +145,7 @@ object LightningGem : Potential(
 ) {
 }
 
-object VampireGem : Potential(
+object VampireGem : GemPotential(
         "VampireGem",
         "§aVampireGem",
         listOf(

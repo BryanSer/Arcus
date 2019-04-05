@@ -24,7 +24,7 @@ public class SQLManager {
         StringBuilder sb = new StringBuilder(String.format("jdbc:mysql://%s:%d/%s?user=%s&password=%s",
                 db.getString("host"), db.getInt("port"), db.getString("database"), db.getString("user"), db.getString("password")));
         connection = DriverManager.getConnection(sb.toString());
-        connection.createStatement().execute("CREATE TABLE IF NOT EXISYS ArcusPlayerData(" +
+        connection.createStatement().execute("CREATE TABLE IF NOT EXISTS ArcusPlayerData(" +
                 "Name VARCHAR(80) NOT NULL PRIMARY KEY," +
                 "EquipAbility INT NOT NULL," +
                 "EquipPotential LONG NOT NULL," +
@@ -37,7 +37,6 @@ public class SQLManager {
     }
 
     public static PlayerData loadData(String name){
-        //TODO 读取 int long long 剩下我写
         try {
             selectData.setString(1,name);
             ResultSet rs = selectData.executeQuery();
@@ -46,8 +45,14 @@ public class SQLManager {
                 long equipPotential = rs.getLong("EquipPotential");
                 long unlockPotential = rs.getLong("UnlockPotential");
                 int unlockAbility = rs.getInt("UnlockAbility");
+                PlayerData pd = new PlayerData(name);
+                pd.loadEquipAbility(equipAbility);
+                pd.loadEquipPotential(equipPotential);
+                pd.loadUnlockAbility(unlockAbility);
+                pd.loadUnlockPotential(unlockPotential);
+                return pd;
             }else {
-                return null;
+                return new PlayerData(name);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -56,7 +61,6 @@ public class SQLManager {
     }
 
     public static void sync(PlayerData data){
-        //TODO 储存int long long
         String name = data.getName();
         int equipAbility = data.bitEquipAbility();
         long equipPotential = data.bitEquipPotential();

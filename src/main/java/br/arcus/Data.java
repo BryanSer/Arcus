@@ -29,7 +29,13 @@ public class Data {
             p = (Player) e;
         }
         if(p != null){
-            return PlayerDatas.get(p.getName());
+            PlayerData pd = PlayerDatas.get(p.getName());
+            if(pd == null){
+                pd = SQLManager.loadData(p.getName());
+                PlayerDatas.put(p.getName(), pd);
+                SQLManager.sync(pd);
+            }
+            return pd;
         }
         return null;
     }

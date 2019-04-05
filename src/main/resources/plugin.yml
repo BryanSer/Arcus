@@ -1,3 +1,13 @@
 name: Arcus
 version: ${project.version}
 main: br.arcus.Main
+depend: [BrAPI]
+commands:
+    Arcus:
+        aliases: [ar,ac,as]
+        description: command
+        usage: |
+            §6/<command> ui >> 打开UI (普通玩家使用/<command>就会打开)
+            §6/<command> list >> 查看所有能力与潜能的名字
+            §6/<command> unlock [玩家] [能力或潜能] >> 解锁
+            §6/<command> reload >> 重载配置

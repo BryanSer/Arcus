@@ -45,6 +45,16 @@ class PlayerData(val name: String) {
 
     fun equip(abi: Ability) {
         equipAbility[abi.type.index] = abi.level
+        SQLManager.sync(this)
+    }
+
+    fun equip(abi: Potential) {
+        if (equipPotential.contains(abi.index)) {
+            equipPotential.remove(abi.index)
+        } else {
+            equipPotential.add(abi.index)
+        }
+        SQLManager.sync(this)
     }
 
     fun isUnlock(abi: Ability): Boolean {
@@ -52,9 +62,19 @@ class PlayerData(val name: String) {
         return uc[abi.level]
     }
 
+    fun isUnlock(p: Potential): Boolean {
+        return unlockPotential.contains(p.index)
+    }
+
     fun unlock(abi: Ability) {
         val uc = unlockAbility[abi.type]!!
         uc[abi.level] = true
+        SQLManager.sync(this)
+    }
+
+    fun unlock(p: Potential) {
+        unlockPotential.add(p.index)
+        SQLManager.sync(this)
     }
 
     fun bitUnlockAbility(): Int {
@@ -129,6 +149,10 @@ class PlayerData(val name: String) {
             val t = ((res shr i) and 0b1).toInt()
             if (t == 1) unlockPotential.add(t)
         }
+    }
+
+    fun isActiving(p: Potential): Boolean {
+        return this.equipPotential.contains(p.index)
     }
 
 }
