@@ -74,7 +74,7 @@ abstract class Potential(
         if (this is Listener) {
             Bukkit.getPluginManager().registerEvents(this, Main.Plugin)
         }
-        displayItemStack = displayItemBuilder.name(this.displayName).lore(
+        displayItemStack = displayItemBuilder.name(this.displayName).clearLore().lore(
                 description.map {
                     var str = it
                     for ((k, v) in config) {

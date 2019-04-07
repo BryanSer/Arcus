@@ -44,7 +44,7 @@ public class AbilityUI extends BaseUI {
 
     @Override
     public Item getItem(Player player, int i) {
-        return null;
+        return contains[i];
     }
 
     @Override

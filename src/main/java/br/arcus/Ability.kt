@@ -25,7 +25,7 @@ abstract class Ability(
         val type: AbilityType,
         val level: Int, // 从0开始 最大7
         protected val displayItemBuilder: ItemBuilder,
-        val buttonActive: Boolean = false
+        val buttonActive: Boolean = true
 ) {
 
     val config: MutableMap<String, Any> = mutableMapOf()
@@ -102,7 +102,7 @@ abstract class Ability(
             }
             data.save(file)
         }
-        displayItemStack = displayItemBuilder.name(this.displayName).lore(
+        displayItemStack = displayItemBuilder.name(this.displayName).clearLore().lore(
                 description.map {
                     var str = it
                     for ((k, v) in config) {

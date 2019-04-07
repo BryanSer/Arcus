@@ -44,7 +44,9 @@ class PlayerData(val name: String) {
     }
 
     fun equip(abi: Ability) {
-        equipAbility[abi.type.index] = abi.level
+        if (equipAbility[abi.type.index] != abi.level)
+            equipAbility[abi.type.index] = abi.level
+        else equipAbility[abi.type.index] = NULL_EQUIP
         SQLManager.sync(this)
     }
 

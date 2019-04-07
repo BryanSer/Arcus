@@ -33,7 +33,7 @@ public class SQLManager {
                 ");");
         insert = connection.prepareStatement("INSERT INTO ArcusPlayerData (Name,EquipAbility,EquipPotential,UnlockPotential,UnlockAbility) VALUES (?, ?, ?, ?, ?)");
         selectData = connection.prepareStatement("SELECT * FROM ArcusPlayerData WHERE Name = ? LIMIT 1");
-        update = connection.prepareStatement("UPDATE ArcusPlayerData SET EquipAbility = ?, EquipPotential = ?, UnlockPotential = ?, UnlockAbility = ? WHERE PlayerName = ? LIMIT 1");
+        update = connection.prepareStatement("UPDATE ArcusPlayerData SET EquipAbility = ?, EquipPotential = ?, UnlockPotential = ?, UnlockAbility = ? WHERE Name = ? LIMIT 1");
     }
 
     public static PlayerData loadData(String name){

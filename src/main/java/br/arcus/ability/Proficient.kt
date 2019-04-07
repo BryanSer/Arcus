@@ -110,7 +110,7 @@ object LiveAndDieTogether : Ability(
         "LiveAndDieTogether",
         "§a同生共死",
         listOf(
-                "§7当生命值到达10%以下 可将周围 §e{range} §7内的玩家吸到身边然后自爆",
+                "§7当生命值到达25%以下 可将周围 §e{range} §7内的玩家吸到身边然后自爆",
                 "§6共造成{damage}伤害 所有玩家共同分担",
                 "§7冷却时间§e {cooldown} §7秒",
                 "§7按下 §eshift §7触发同生共死"
@@ -127,8 +127,8 @@ object LiveAndDieTogether : Ability(
 
     override fun onCast(p: Player): Boolean {
         val attribute = p.getAttribute(Attribute.GENERIC_MAX_HEALTH)
-        if (p.health / attribute.value > 0.1) {
-            p.sendMessage("§c你的血量还高于10%")
+        if (p.health / attribute.value > 0.25) {
+            p.sendMessage("§c你的血量还高于25%")
             return false
         }
         val range = (config["range"] as Number).toDouble()
@@ -147,7 +147,7 @@ object LiveAndDieTogether : Ability(
         for (p in list) {
             p.damage(damage)
         }
-        p.world.createExplosion(p.location.x, p.location.y, p.location.z, 4f, false)
+        p.world.createExplosion(p.location.x, p.location.y, p.location.z, 4f, false,false)
         list.clear()
         return true
     }

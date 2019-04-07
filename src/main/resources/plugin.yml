@@ -1,7 +1,7 @@
 name: Arcus
 version: ${project.version}
 main: br.arcus.Main
-depend: [BrAPI]
+depend: [BrAPI,ProtocolLib]
 commands:
     Arcus:
         aliases: [ar,ac,as]

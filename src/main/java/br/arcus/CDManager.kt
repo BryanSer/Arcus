@@ -20,7 +20,7 @@ class CDManager {
     }
 
     fun castable(e: Entity, cd: Double): Boolean {
-        val last = lastCast[getID(e)] ?: 0
+        val last = lastCast[getID(e)] ?: return true
         return (System.currentTimeMillis() - last) > cd * 1000L
     }
 

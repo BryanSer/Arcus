@@ -25,7 +25,7 @@ object Clean : Ability(
         listOf(
                 "§7震开周围§e {range} §7格内的玩家并移除自身 §e负面 §7药水效果",
                 "§7冷却时间§e {cooldown} §7秒",
-                "§7按下 §eF §7使用能力"
+                "§7按下 §eQ §7使用能力"
         ),
         AbilityType.Defensive,
         0,
@@ -33,7 +33,7 @@ object Clean : Ability(
 ) {
     init {
         config["range"] = 3.0
-        ArtificialScroll.config["cooldown"] = 10.0
+        config["cooldown"] = 10.0
     }
 
     override fun onCast(p: Player): Boolean {
@@ -41,11 +41,12 @@ object Clean : Ability(
             if (ArtificialScroll.buff.contains(pe)) {
                 continue
             }
-            p.removePotionEffect(pe)
+            if (pe != null)
+                p.removePotionEffect(pe)
         }
         val range = (config["range"] as Number).toDouble()
         for (e in p.getNearbyEntities(range, range, range)) {
-            if (e is Player && e !== p) {
+            if (e !== p) {
                 val vec = e.location.toVector().subtract(p.location.toVector()).normalize().multiply(2.2)
                 e.velocity = vec
             }
@@ -76,9 +77,9 @@ object SoundOfGoldenLeather : Ability(
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     fun onDamage(evt: EntityDamageByEntityEvent) {
         val p = evt.damager
-        if(p is Player){
+        if (p is Player) {
             val time = target[p.entityId] ?: return
-            if(System.currentTimeMillis() < time){
+            if (System.currentTimeMillis() < time) {
                 evt.damage *= 0.5
             }
         }
