@@ -8,8 +8,6 @@ import java.util.Comparator;
 import Br.API.GUI.Ex.BaseUI;
 import Br.API.GUI.Ex.Item;
 import Br.API.GUI.Ex.SnapshotFactory;
-import br.arcus.potential.GemPotential;
-import br.arcus.potential.Line1Kt;
 
 public class AbilityUI extends BaseUI {
     private SnapshotFactory factory = SnapshotFactory.getDefaultSnapshotFactory();

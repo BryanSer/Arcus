@@ -132,7 +132,7 @@ class PlayerData(val name: String) {
         equipPotential.clear()
         for (i in 0..26) {
             val t = ((res shr i) and 0b1).toInt()
-            if (t == 1) equipPotential.add(t)
+            if (t == 1) equipPotential.add(i)
         }
     }
 
@@ -149,7 +149,7 @@ class PlayerData(val name: String) {
         unlockPotential.clear()
         for (i in 0..26) {
             val t = ((res shr i) and 0b1).toInt()
-            if (t == 1) unlockPotential.add(t)
+            if (t == 1) unlockPotential.add(i)
         }
     }
 

@@ -31,6 +31,9 @@ enum class AbilityType(
             0) {
         @EventHandler(ignoreCancelled = false)
         fun onF(evt: PlayerSwapHandItemsEvent) {
+            if(!Data.EnableWorlds.contains(evt.player.world.name)){
+                return;
+            }
             val pd = Data.getData(evt.player) ?: return
             val ac = pd.getActiving(this) ?: return
             if (!ac.buttonActive) {
@@ -62,6 +65,9 @@ enum class AbilityType(
                             .plugin(Main.Plugin)
             ){
                 override fun onPacketReceiving(evt: PacketEvent) {
+                    if(!Data.EnableWorlds.contains(evt.player.world.name)){
+                        return;
+                    }
                     val packet = evt.packet
                     val read = packet.playerDigTypes.read(0)
                     if(read == EnumWrappers.PlayerDigType.DROP_ALL_ITEMS
@@ -92,6 +98,9 @@ enum class AbilityType(
             2) {
         @EventHandler
         fun onShift(evt: PlayerToggleSneakEvent) {
+            if(!Data.EnableWorlds.contains(evt.player.world.name)){
+                return;
+            }
             if (!evt.isSneaking) return
             val pd = Data.getData(evt.player) ?: return
             val ac = pd.getActiving(this) ?: return

@@ -47,7 +47,7 @@ object Clean : Ability(
         val range = (config["range"] as Number).toDouble()
         for (e in p.getNearbyEntities(range, range, range)) {
             if (e !== p) {
-                val vec = e.location.toVector().subtract(p.location.toVector()).normalize().multiply(2.2)
+                val vec = e.location.toVector().subtract(p.location.toVector()).normalize().multiply(1.5)
                 e.velocity = vec
             }
         }

@@ -3,6 +3,7 @@ package br.arcus.ability
 import Br.API.ItemBuilder
 import br.arcus.Ability
 import br.arcus.AbilityType
+import br.arcus.Data
 import br.arcus.Main
 import org.bukkit.Material
 import org.bukkit.entity.Player
@@ -48,6 +49,9 @@ object ShortNeedleAttack : Ability(
 
     @EventHandler(ignoreCancelled = true)
     fun onShift(evt: PlayerToggleSneakEvent) {
+        if(!Data.EnableWorlds.contains(evt.player.world.name)){
+            return;
+        }
         if (evt.isSneaking) {
             if (!super.isActiving(evt.player)) {
                 return

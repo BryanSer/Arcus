@@ -3,9 +3,13 @@ package br.arcus.ability
 import Br.API.ItemBuilder
 import br.arcus.Ability
 import br.arcus.AbilityType
+import br.arcus.Main
+import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.attribute.Attribute
+import org.bukkit.attribute.AttributeModifier
 import org.bukkit.entity.Player
+import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 
 fun getAttack(): List<Ability> {
@@ -29,9 +33,9 @@ object ArtificialScroll : Ability(
 ) {
 
     val buff = mutableListOf<PotionEffectType>()
-    
+
     fun removeBuff(p: Player) {
-        for(pe in buff){
+        for (pe in buff) {
             p.removePotionEffect(pe)
         }
     }
@@ -71,7 +75,7 @@ object ArtificialScroll : Ability(
         }
         if (target != null) {
             removeBuff(target)
-            val vec = p.location.toVector().subtract(target.location.toVector()).normalize().multiply(1.5)
+            val vec = p.location.toVector().subtract(target.location.toVector()).normalize().multiply(0.95)
             target.velocity = vec
             return true
         }
@@ -105,7 +109,26 @@ object ToFightAnUphillBattle : Ability(
         } else {
             val time = (config["time"] as Number).toDouble()
             val tick = (time * 20).toInt()
-
+            val attr = p.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED)
+            val it = attr.modifiers.iterator()
+            while (it.hasNext()) {
+                val next = it.next()
+                if (next.name == "ToFightAnUphillBattle") {
+                    it.remove()
+                }
+            }
+            attr.addModifier(AttributeModifier("ToFightAnUphillBattle", 0.5, AttributeModifier.Operation.ADD_SCALAR))
+            p.addPotionEffect(PotionEffect(PotionEffectType.JUMP, tick, 1))
+            Bukkit.getScheduler().runTaskLater(Main.Plugin, {
+                val attr = p.getAttribute(Attribute.GENERIC_ATTACK_SPEED)
+                val it = attr.modifiers.iterator()
+                while (it.hasNext()) {
+                    val next = it.next()
+                    if (next.name == "ToFightAnUphillBattle") {
+                        it.remove()
+                    }
+                }
+            }, tick.toLong())
             return true
         }
     }

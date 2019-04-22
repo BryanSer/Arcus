@@ -25,6 +25,7 @@ public final class Main extends JavaPlugin {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        Data.loadConfig();
         Bukkit.getPluginManager().registerEvents(CDManager.Companion, this);
         Ability.initAbility();
         Potential.initPotential();
@@ -65,6 +66,7 @@ public final class Main extends JavaPlugin {
             for (Potential potential : Data.registeredPotential.values()) {
                 potential.reload();
             }
+            Data.loadConfig();
             sender.sendMessage("§6重载完成");
             return true;
         }

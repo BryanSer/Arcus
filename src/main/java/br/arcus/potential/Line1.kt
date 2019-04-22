@@ -46,7 +46,7 @@ abstract class GemPotential(
         if (amount == null) {
             amount = (config["amount"] as Number).toDouble() / 100.0
         }
-        return amount!!
+        return amount ?: getAmount()
     }
 
     override fun reload() {
