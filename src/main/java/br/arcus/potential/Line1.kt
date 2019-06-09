@@ -43,11 +43,12 @@ abstract class GemPotential(
 
     var amount: Double? = null
     fun getAmount(): Double {
-        if (amount == null) {
+        return (config["amount"] as Number).toDouble() / 100.0
+        /*if (amount == null) {
             amount = (config["amount"] as Number).toDouble() / 100.0
         }
         return amount ?: getAmount()
-    }
+    */}
 
     override fun reload() {
         super.reload()

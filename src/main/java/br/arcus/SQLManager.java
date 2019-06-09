@@ -23,12 +23,12 @@ public class SQLManager {
         return f.exists();
     }
 
-    private static void transform(){
+    private static void transform() {
         try {
             Statement sta = connection.createStatement();
             PreparedStatement ps = connection.prepareStatement("INSERT INTO ArcusPlayerDataFix (Name,EquipAbility,EquipPotential,UnlockPotential,UnlockAbility) VALUES (?, ?, ?, ?, ?)");
             ResultSet rs = sta.executeQuery("SELECT * FROM ArcusPlayerData");
-            while(rs.next()){
+            while (rs.next()) {
                 String name = rs.getString("Name");
                 int ea = rs.getInt("EquipAbility");
                 long ep = 0;
@@ -47,7 +47,7 @@ public class SQLManager {
         }
     }
 
-    private static void setTransform(){
+    private static void setTransform() {
         File f = new File(Main.Plugin.getDataFolder(), ".transform");
         try {
             f.createNewFile();
@@ -89,7 +89,7 @@ public class SQLManager {
                 e.printStackTrace();
             }
         }, 3L * 60 * 60 * 20, 3L * 60 * 60 * 20);
-        if(!isTransform()){
+        if (!isTransform()) {
             transform();
             setTransform();
         }

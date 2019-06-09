@@ -113,19 +113,22 @@ object ToFightAnUphillBattle : Ability(
             val it = attr.modifiers.iterator()
             while (it.hasNext()) {
                 val next = it.next()
-                if (next.name == "ToFightAnUphillBattle") {
-                    it.remove()
+
+                if (next.name.equals("ToFightAnUphillBattle", true)) {
+                    attr.removeModifier(next)
+                    break;
                 }
             }
             attr.addModifier(AttributeModifier("ToFightAnUphillBattle", 0.5, AttributeModifier.Operation.ADD_SCALAR))
             p.addPotionEffect(PotionEffect(PotionEffectType.JUMP, tick, 1))
             Bukkit.getScheduler().runTaskLater(Main.Plugin, {
-                val attr = p.getAttribute(Attribute.GENERIC_ATTACK_SPEED)
+                val attr = p.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED)
                 val it = attr.modifiers.iterator()
                 while (it.hasNext()) {
                     val next = it.next()
-                    if (next.name == "ToFightAnUphillBattle") {
-                        it.remove()
+                    if (next.name.equals("ToFightAnUphillBattle", true)) {
+                        attr.removeModifier(next)
+                        break;
                     }
                 }
             }, tick.toLong())

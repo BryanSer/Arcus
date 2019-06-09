@@ -92,6 +92,7 @@ class PlayerData(val name: String) {
         return res
     }
 
+
     fun loadUnlockAbility(res: Int) {
         val pro = res and 0b11111111
         unlockAbility[AbilityType.Proficient] = toArr(pro)
