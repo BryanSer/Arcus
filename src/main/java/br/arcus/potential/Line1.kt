@@ -60,7 +60,7 @@ object AttackGem : GemPotential(
         "AttackGem",
         "§aAttackGem",
         listOf(
-                "§7攻击时造成额外上海",
+                "§7攻击时造成额外伤害",
                 "§7增加量: {amount}%"
         ),
         0,
